@@ -17,11 +17,11 @@ int main()
 	x->SetParametr_ = &object->SetX;//to here
 	vector <con*> list;
 	list.push_back(x);
-	while (object->GetTime() <= 10)
+	while (object->GetTime() <= 1)
 	{
-		object->Move(list);
+		object->Move(object);
 	}
-	cout << object->GetX() << " " << object->GetY() << endl;
+	printf("x=%lf y=%lf\n",object->GetX(),object->GetY());
 	return 0;
 }
 

@@ -3,14 +3,7 @@
 #include <vector>
 #include <cmath>
 using namespace std;
-class con
-{
-public:
-	void (*SetParametr_)(double parametr);
-	double (*GetParametr_)();
-	double (*f_)();
-	con() = default;
-};
+
 class Class
 {
 private:
@@ -21,7 +14,7 @@ public:
 	Class() = default;
 	~Class() = default;
 	void SetTime(double time);
-	void Move(vector <con*> list);
+	void Move(Class* object);
 	void SetX(double x);
 	void SetY(double y);
 	double GetTime();
@@ -29,6 +22,17 @@ public:
 	double GetY();
 	double fx();
 	double fy();
+};
+typedef void(Class::* setter)(double parametr);
+typedef double (Class::* getter)();
+typedef double (Class::* f)();
+class con
+{
+public:
+	setter SetParametr_=0;
+	getter GetParametr_=0;
+	f f_=0;
+	con() = default;
 };
 class Integrator
 {
@@ -39,6 +43,6 @@ public:
 	~Integrator() = default;
 	void SetDelta(double delta);
 	double GetDelta();
-	void integration(vector <con*> list, double time);
+	void integration(vector <con*> list, double time,Class* object);
 	double stepmaker(double f());
 };
