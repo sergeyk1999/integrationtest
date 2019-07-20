@@ -11,17 +11,12 @@ int main()
 	object->SetTime(0);
 	object->SetX(0);
 	object->SetY(0);
-	con* x=new con();
-	x->f_ = &object->fx;//from here
-	x->GetParametr_ = &object->GetX;
-	x->SetParametr_ = &object->SetX;//to here
-	vector <con*> list;
-	list.push_back(x);
 	while (object->GetTime() <= 1)
 	{
 		object->Move(object);
 	}
 	printf("x=%lf y=%lf\n",object->GetX(),object->GetY());
+	object->~Class();
 	return 0;
 }
 
