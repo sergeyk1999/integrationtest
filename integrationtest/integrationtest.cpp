@@ -9,12 +9,9 @@ int main()
 {
 	Class* object = new Class();
 	object->SetTime(0);
-	object->SetX(0);
+	object->SetX(1);
 	object->SetY(0);
-	while (object->GetTime() <= 1)
-	{
-		object->Move(object);
-	}
+	object->Move(object);
 	printf("x=%lf y=%lf\n",object->GetX(),object->GetY());
 	object->~Class();
 	return 0;

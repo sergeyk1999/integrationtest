@@ -42,19 +42,19 @@ void Class::Move(Class* object)
 	//printf("%lf\n", (object->*(x->GetParametr_))());
 	vector <con*> list;
 	list.push_back(x);
-	list.push_back(y);
+	//list.push_back(y);
 	Integrator* a = new Integrator();
 	a->SetDelta(0.1);
-	a->integration(list, time_,object);
-	time_ += 1;
+	a->integration(list, 0.5,object);
+	time_ += a->GetDelta();
 	//cout << "x1=" << object->GetX() << "x2=" << GetX() << "x3=" << (object->*(x->GetParametr_))() << endl;
 	a->~Integrator();
 }
-double Class::fx()
+double Class::fx(double ind,double dep)
 {
-	return 5 * time_;
+	return ind + dep;
 }
-double Class::fy()
+double Class::fy(double ind,double dep)
 {
 	return 3 * time_;
 }
@@ -74,11 +74,19 @@ void Integrator::integration(vector<con*> list, double time,Class* object)
 	{
 		for (auto i : list)
 		{
-			(object->*(i->SetParametr_))((object->*(i->GetParametr_))()+(object->*(i->f_))()*delta_);
+			cout << (object->*(i->GetParametr_))() << endl;
+			(object->*(i->SetParametr_))((object->*(i->GetParametr_))() + stepmaker(object, i,t, (object->*(i->GetParametr_))()));
 		}
 	}
 }
-double Integrator::stepmaker(double f())
+double Integrator::stepmaker(Class* object,con* i,double ind,double dep)
 {
-	return f() * delta_;
+	double k1 = delta_ * ((object->*(i->f_))(ind, dep));
+	double k2 = delta_ * ((object->*(i->f_))(ind + delta_ / 2, dep + k1 / 2));
+	double k3 = delta_ * ((object->*(i->f_))(ind + delta_ / 2, dep + k2 / 2));
+	double k4 = delta_ * ((object->*(i->f_))(ind + delta_, dep + k3));
+	//cout << k1 << " " << k2 << " " << k3 << " " << k4 << endl;
+	double res = (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+	printf("delta=%lf\n", res);
+	return res;
 }

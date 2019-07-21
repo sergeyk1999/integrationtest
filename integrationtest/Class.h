@@ -20,12 +20,12 @@ public:
 	double GetTime();
 	double GetX();
 	double GetY();
-	double fx();
-	double fy();
+	double fx(double ind,double dep);
+	double fy(double ind,double dep);
 };
 typedef void(Class::* setter)(double parametr);
 typedef double (Class::* getter)();
-typedef double (Class::* f)();
+typedef double (Class::* f)(double ind,double dep);
 class con
 {
 public:
@@ -44,5 +44,5 @@ public:
 	void SetDelta(double delta);
 	double GetDelta();
 	void integration(vector <con*> list, double time,Class* object);
-	double stepmaker(double f());
+	double stepmaker(Class* object,con* i,double ind,double dep);
 };
